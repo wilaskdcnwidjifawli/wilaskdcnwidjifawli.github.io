@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HGK</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./a.js"></script>
+    <script src="./b.js"></script>
+    <link rel="stylesheet" href="./c.css">
+    <link rel="stylesheet" href="./d.css">
+</head>
+
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img id="projectLogo" src="" alt="项目logo" width="32" height="32">
+                <span id="projectName"></span>
+            </div>
+            <div class="wallet-container">
+                <button id="connectWalletBtn">连接钱包</button>
+                <div id="walletDropdown" class="wallet-dropdown" style="display: none;">
+                    <div class="wallet-dropdown-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                        </svg>
+                        <span id="walletAddress">钱包地址</span>
+                    </div>
+                    <div class="wallet-dropdown-item disconnect">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
+                        </svg>
+                        断开连接
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header>
+        <h1 id="headerProjectName"></h1>
+        <div class="header-text-row">
+            <p></p>
+        </div>
+        <div class="countdown-wrapper" style="display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; margin-top: 10px;">
+            <div class="countdown-status" style="margin-bottom: 0; color: var(--primary-color); font-weight: bold; font-size: 18px; text-shadow: 0 1px 2px rgba(0,0,0,0.2); background-color: rgba(26, 26, 26, 0.6); padding: 6px 0; border-radius: 15px 15px 0 0; border: 1px solid var(--primary-color); border-bottom: none; position: relative; z-index: 2; width: 100%; max-width: 350px; text-align: center;">
+                <span id="countdown-status-text">IDO倒计时</span>
+            </div>
+            <div class="header-countdown" id="countdown" style="background-color: rgba(26, 26, 26, 0.4); padding: 15px 10px; border-radius: 0 0 12px 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-top: -1px; border: 1px solid var(--primary-color); border-top: 1px solid rgba(212, 175, 55, 0.5); width: 100%; max-width: 350px; display: flex; justify-content: space-around;">
+                <div class="countdown-item" style="background-color: rgba(26, 26, 26, 0.7); border: 1px solid rgba(212, 175, 55, 0.3); margin: 0 5px; border-radius: 8px; padding: 5px 0; flex: 1; max-width: 70px;">
+                    <div class="countdown-number" id="days" style="color: var(--primary-color);">00</div>
+                    <div class="countdown-label">天</div>
+                </div>
+                <div class="countdown-item" style="background-color: rgba(26, 26, 26, 0.7); border: 1px solid rgba(212, 175, 55, 0.3); margin: 0 5px; border-radius: 8px; padding: 5px 0; flex: 1; max-width: 70px;">
+                    <div class="countdown-number" id="hours" style="color: var(--primary-color);">00</div>
+                    <div class="countdown-label">时</div>
+                </div>
+                <div class="countdown-item" style="background-color: rgba(26, 26, 26, 0.7); border: 1px solid rgba(212, 175, 55, 0.3); margin: 0 5px; border-radius: 8px; padding: 5px 0; flex: 1; max-width: 70px;">
+                    <div class="countdown-number" id="minutes" style="color: var(--primary-color);">00</div>
+                    <div class="countdown-label">分</div>
+                </div>
+                <div class="countdown-item" style="background-color: rgba(26, 26, 26, 0.7); border: 1px solid rgba(212, 175, 55, 0.3); margin: 0 5px; border-radius: 8px; padding: 5px 0; flex: 1; max-width: 70px;">
+                    <div class="countdown-number" id="seconds" style="color: var(--primary-color);">00</div>
+                    <div class="countdown-label">秒</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <section id="participate">
+            <div class="token-info">
+                <img id="tokenLogo" src="" alt="代币图标" class="token-logo">
+                <div class="token-basic-info">
+                    <h2 class="token-name" id="tokenName"></h2>
+                </div>
+            </div>
+
+            <div class="mint-card">
+                <!-- <div class="progress-info">
+                    <span id="progress-text"></span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div> -->
+
+                <div class="user-stats-container">
+                    <!-- <div class="personal-stats">
+                        <div class="stats-label">您已购买</div>
+                        <div class="stats-value">
+                            <span id="myShares" class="stats-number">0</span>
+                            <span class="stats-unit">份</span>
+                        </div>
+                    </div> -->
+                    <div class="personal-stats">
+                        <div class="stats-label">已募集金额</div>
+                        <div class="stats-value">
+                            <span id="detailRaised2" class="stats-number">0</span>
+                            <span class="stats-unit currency-unit">Currency</span>
+                        </div>
+                    </div>
+                    <div class="personal-stats">
+                        <div class="stats-label">您已购买</div>
+                        <div class="stats-value">
+                            <span id="myPayAmount" class="stats-number">0</span>
+                            <span class="stats-unit currency-unit">Currency</span>
+                        </div>
+                    </div>
+                    <div class="personal-stats">
+                        <div class="stats-label">获得代币</div>
+                        <div class="stats-value">
+                            <span id="myTokens" class="stats-number">0</span>
+                            <span class="stats-unit token-unit">Token</span>
+                        </div>
+                    </div>
+                    <!-- <div class="personal-stats">
+                        <div class="stats-label">推荐奖励</div>
+                        <div class="stats-value">
+                            <span id="myRewards" class="stats-number">0</span>
+                            <span class="stats-unit currency-unit">Currency</span>
+                        </div>
+                    </div> -->
+                </div>
+
+                <div class="mint-form">
+                    <div class="referral-input">
+                        <div class="referrer-info">
+                            <span>推荐人地址:</span>
+                            <span id="referrerDisplay">暂无推荐人</span>
+                        </div>
+                    </div>
+                    <div class="mint-input-wrapper">
+                        <input type="number" id="shareCount" class="mint-input" placeholder="输入购买价值" min="0.01" value="0.1">
+                        <span class="mint-input-unit">BNB</span>
+                    </div>
+                    <!-- <div class="cost-estimate">
+                        <span>预计花费</span>
+                        <span class="cost-value"><span id="totalCost">0</span></span>
+                    </div> -->
+
+                    <button class="mint-button" id="buyBtn">立即购买</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="project-intro">
+            <h2>项目介绍</h2>
+            <div class="intro-content">
+                <div class="intro-card main-intro">
+                    <div class="intro-header">
+                        <div class="intro-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M8 12l2 2 4-4"></path>
+                            </svg>
+                        </div>
+                        <h3>🔥皇冠原班人马打造🔥</h3>
+                        <span class="intro-subtitle">全新皇冠👑王(HGK) · 再造币圈龙头</span>
+                    </div>
+                    <p class="intro-description">
+                        皇冠由一群区块链爱好者一起打造，22年一个月涨幅5000倍。25年联合国外SK集团注资百万美金打造全新HGK，再造币圈龙头。采用创新机制买卖2%，加LP分红，挖矿本币+分红BNB双收益。
+                    </p>
+                </div>
+
+                <div class="intro-grid">
+                    <div class="intro-card stats-card">
+                        <div class="intro-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
+                        </div>
+                        <div class="intro-stats">
+                            <h4>发行总量</h4>
+                            <span class="intro-number">2100万</span>
+                            <span class="intro-unit">HGK</span>
+                        </div>
+                    </div>
+
+                    <div class="intro-card mechanism-card">
+                        <div class="intro-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                        </div>
+                        <div class="mechanism-info">
+                            <h4>智能机制</h4>
+                            <div class="mechanism-details">
+                                <div class="mechanism-item">
+                                    <span class="mechanism-label">交易滑点:</span>
+                                    <span class="mechanism-value">买卖各2%</span>
+                                </div>
+                                <div class="mechanism-item">
+                                    <span class="mechanism-label">分配方式:</span>
+                                    <span class="mechanism-value">1% LP分红本币</span>
+                                    <span class="mechanism-value">0.5% 股东节点分红BNB</span>
+                                    <span class="mechanism-value">0.5% 自动销毁BNB</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="intro-card rewards-card">
+                        <div class="intro-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="8.5" cy="7" r="4"/>
+                                <line x1="20" y1="8" x2="20" y2="14"/>
+                                <line x1="23" y1="11" x2="17" y2="11"/>
+                            </svg>
+                        </div>
+                        <div class="rewards-info">
+                            <h4>LP质押收益</h4>
+                            <div class="rewards-details">
+                                <div class="reward-item">
+                                    <span class="reward-period">HGK分红</span>
+                                    <span class="reward-percentage">每天1%</span>
+                                </div>
+                                <div class="reward-item">
+                                    <span class="reward-period">BNB分红</span>
+                                    <span class="reward-percentage">每天1%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="intro-card history-card">
+                        <div class="intro-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="1" x2="12" y2="23"/>
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                            </svg>
+                        </div>
+                        <div class="history-info">
+                            <h4>分配机制</h4>
+                            <div class="history-details">
+                                <div class="history-item">
+                                    <span class="history-label">私募占比:</span>
+                                    <span class="history-value">40%</span>
+                                </div>
+                                <div class="history-item">
+                                    <span class="history-label">黑洞产出:</span>
+                                    <span class="history-value">45%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="intro-card highlights-card">
+                    <h4>核心亮点</h4>
+                    <div class="highlights-grid">
+                        <div class="highlight-item">
+                            <span class="highlight-icon">🔥</span>
+                            <div class="highlight-text">
+                                <strong>24小时底池自动销毁</strong>
+                                <span>推动币价快速上涨24%</span>
+                            </div>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-icon">👑</span>
+                            <div class="highlight-text">
+                                <strong>股东节点分红</strong>
+                                <span>0.5%股东节点分红</span>
+                            </div>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-icon">💎</span>
+                            <div class="highlight-text">
+                                <strong>自动销毁机制</strong>
+                                <span>0.5%自动销毁进黑洞</span>
+                            </div>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-icon">🚀</span>
+                            <div class="highlight-text">
+                                <strong>双收益挖矿</strong>
+                                <span>本币+BNB分红双收益</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="token-details">
+            <h2>IDO详情</h2>
+            <ul class="token-details-list">
+                <!-- <li>
+                    <span>每份代币:</span>
+                    <div class="token-value">
+                        <span id="tokenPerShare">0</span>
+                        <span class="token-unit">DAI</span>
+                    </div>
+                </li> -->
+                <li>
+                    <span>私募价格:</span>
+                    <div class="token-value">
+                        <span>1 BNB = 12000 HGK</span>
+                    </div>
+                </li>
+                <!-- <li>
+                    <span>限购份数:</span>
+                    <div class="token-value">
+                        <span id="maxSharesPerUser">0</span>
+                        <span>份</span>
+                    </div>
+                </li> -->
+                <!-- <li>
+                    <span>已卖出代币:</span>
+                    <div class="token-value">
+                        <span id="soldTokens">0</span>
+                        <span class="token-unit">DAI</span>
+                    </div>
+                </li> -->
+                <!-- <li>
+                    <span>硬顶数值:</span>
+                    <div class="token-value">
+                        <span id="detailHardCap">0</span>
+                        <span class="currency-unit">BUSD</span>
+                    </div>
+                </li> -->
+                <li>
+                    <span>已募资金:</span>
+                    <div class="token-value">
+                        <span id="detailRaised">0</span>
+                        <span class="currency-unit">BUSD</span>
+                    </div>
+                </li>
+                <li>
+                    <span>私募状态:</span>
+                    <div class="token-value">
+                        <span id="idoStatus">未开始</span>
+                    </div>
+                </li>
+                <!-- 多代推荐奖励，会动态生成 -->
+                <div id="referralRewardsContainer">
+                    <!-- 动态生成的奖励百分比项将被插入这里 -->
+                </div>
+                <li>
+                    <span>开始时间:</span>
+                    <div class="token-value">
+                        <span id="idoBeginTime">未设置</span>
+                    </div>
+                </li>
+                <li>
+                    <span>结束时间:</span>
+                    <div class="token-value">
+                        <span id="idoEndTime">未设置</span>
+                    </div>
+                </li>
+            </ul>
+            <div class="social-links">
+                <a id="websiteLink" href="#" target="_blank" class="social-link" style="display: none;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path
+                            d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                        </path>
+                    </svg>
+                    <!-- <span>Website</span> -->
+                </a>
+                <a id="xLink" href="#" target="_blank" class="social-link" style="display: none;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                        </path>
+                    </svg>
+                    <!-- <span>X</span> -->
+                </a>
+                <a id="telegramLink" href="#" target="_blank" class="social-link" style="display: none;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 2L11 13"></path>
+                        <path d="M22 2L15 22L11 13L2 9L22 2Z" fill="currentColor" fill-opacity="0.2"></path>
+                    </svg>
+                    <!-- <span>TG</span> -->
+                </a>
+            </div>
+        </section>
+
+        <section id="invitation-section">
+            <h2>邀请链接</h2>
+            <div class="invitation-card">
+                <div class="invitation-header">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="8.5" cy="7" r="4"></circle>
+                        <line x1="20" y1="8" x2="20" y2="14"></line>
+                        <line x1="23" y1="11" x2="17" y2="11"></line>
+                    </svg>
+                    <span>邀请好友获得推荐奖励</span>
+                </div>
+                <div class="invitation-content">
+                    <div class="invitation-link-container">
+                        <input type="text" id="myReferralLink" class="invitation-link" readonly>
+                        <button class="invitation-copy-btn" id="copyBtn">
+                            <i class="fas fa-copy"></i> 复制链接
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="referrals-section">
+            <h2>我的下级</h2>
+            <div class="referral-stats">
+                <div class="stat-item">
+                    <div class="stat-label">我的直推人数</div>
+                    <div class="stat-value" id="referralCount"></div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">直推购买总额</div>
+                    <div class="stat-value"><span id="referralTotalAmount"></span> <span
+                            class="stat-unit currency-unit">BUSD</span></div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">累计获得奖励</div>
+                    <div class="stat-value"><span id="totalReferralRewards"></span> <span
+                            class="stat-unit currency-unit">BUSD</span></div>
+                </div>
+            </div>
+
+            <div class="users-container">
+                <div class="users-table-container">
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th style="text-align: center;">地址</th>
+                                <th style="text-align: center;">投入金额</th>
+                            </tr>
+                        </thead>
+                        <tbody id="referralsTableBody">
+                            <!-- 下级用户数据将动态插入这里 -->
+                            <tr>
+                                <td colspan="3" style="text-align:center; padding: 30px; color: #666;">
+                                    加载中...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <button id="prevReferralPage" class="pagination-btn">上一页</button>
+                    <span id="referralPageIndicator">第 <span id="referralCurrentPage">1</span> / <span
+                            id="referralTotalPages">1</span> 页</span>
+                    <button id="nextReferralPage" class="pagination-btn">下一页</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="users-section" style="display: none;">
+            <h2>参与用户</h2>
+            <div class="users-container">
+                <div class="users-table-container">
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th style="text-align: center;">地址</th>
+                                <th style="text-align: center;">投入金额</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- 用户数据将动态插入这里 -->
+                            <tr>
+                                <td colspan="3" style="text-align:center; padding: 30px; color: #666;">
+                                    加载中...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <button id="prevPage" class="pagination-btn">上一页</button>
+                    <span id="pageIndicator">第 <span id="currentPage">1</span> / <span id="totalPages">1</span> 页</span>
+                    <button id="nextPage" class="pagination-btn">下一页</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="admin-section" id="adminSection" style="display: none;">
+            <h2>管理员控制面板</h2>
+            <div class="admin-card">
+                <div class="admin-content">
+                    <!-- IDO合约地址显示 -->
+                    <div class="contract-address-container">
+                        <div class="contract-address-label">
+                            <i class="fas fa-file-contract"></i>
+                            <span style="font-weight: bold; color: red;">请将私募代返的代币打入以下合约自动返币<br>如未打将无法自动代返币(后续可一键取出)</span>
+                        </div>
+                        <div class="contract-address-value" id="idoContractAddress">0x0000000000000000000000000000000000000000</div>
+                        <button class="contract-address-copy" id="copyContractAddressBtn">
+                            <i class="fas fa-copy"></i>
+                            <span>复制地址</span>
+                        </button>
+                    </div>
+                    
+                    <!-- 基础设置 -->
+                    <h3 class="admin-section-title">基本设置</h3>
+                    <div class="admin-panel">
+                        <div class="form-group">
+                            <label for="tokenMetadata">代币元数据:</label>
+                            <div class="metadata-inputs">
+                                <div class="metadata-input-group">
+                                    <label for="metaTitle">项目大标题:</label>
+                                    <input type="text" id="metaTitle" placeholder="IDO例子大标题">
+                                </div>
+                                <div class="metadata-input-group">
+                                    <label for="metaSubtitle">项目小标题:</label>
+                                    <input type="text" id="metaSubtitle" placeholder="IDO例子小标题">
+                                </div>
+                             <!--   <div class="metadata-input-group">
+                                    <label for="metaAnnouncement">公告文案:</label>
+                                    <input type="text" id="metaAnnouncement" placeholder="IDO例子公告文案">
+                                </div> -->
+                                <!-- <div class="metadata-input-group">
+                                    <label for="metaWebsite">官网地址:</label>
+                                    <input type="text" id="metaWebsite" placeholder="example.com">
+                                </div> -->
+                                <div class="metadata-input-group">
+                                    <label for="metaLogo">项目Logo地址:</label>
+                                    <input type="text" id="metaLogo" placeholder="https://example.com/logo.png">
+                                </div>
+                                <div class="metadata-input-group">
+                                    <label for="metaTelegram">Telegram电报:</label>
+                                    <input type="text" id="metaTelegram" placeholder="t.me/example">
+                                </div>
+                                <div class="metadata-input-group">
+                                    <label for="metaX">Twitter推特:</label>
+                                    <input type="text" id="metaX" placeholder="x.com/example">
+                                </div>
+                            </div>
+                            <input type="hidden" id="tokenMetadata">
+                            <button class="admin-btn" id="setTokenMetadataBtn">更新元数据</button>
+                        </div>
+                        <div class="form-group">
+                            <label for="mainTokenAddress">私募代币合约 已开始不建议更改:</label>
+                            <input type="text" id="mainTokenAddress" placeholder="0x...">
+                            <button class="admin-btn" id="setMainTokenBtn">更新</button>
+                        </div>
+                        <div class="form-group">
+                            <label for="currencyAddress">用户付款代币合约 已开始不建议更改<br>1. BNB  (直接输入 BNB 即可)<br>2. USDT (直接输入USDT即可)</label>
+                            <input type="text" id="currencyAddress" placeholder="0x...">
+                            <button class="admin-btn" id="setCurrencyAddressBtn">更新</button>
+                        </div>
+                        <div class="form-group">
+                            <label for="fundReceiveAddress">资金接收地址:</label>
+                            <input type="text" id="fundReceiveAddress" placeholder="0x...">
+                            <button class="admin-btn" id="setFundReceiveAddressBtn">更新</button>
+                        </div>
+                    </div>
+
+                    <!-- 价格设置 -->
+                    <h3 class="admin-section-title">价格设置</h3>
+                    <div class="admin-panel">
+                        <div class="form-group">
+                            <label for="valuePerShare">每份价格:</label>
+                            <input type="number" id="valuePerShare" step="any">
+                            <button class="admin-btn" id="setValuePerShareBtn">更新</button>
+                        </div>
+                        <div class="form-group">
+                            <label for="tokenAmtPerShare">每份代币数量:</label>
+                            <input type="number" id="tokenAmtPerShare" step="any">
+                            <button class="admin-btn" id="setTokenAmtPerShareBtn">更新</button>
+                        </div>
+                        <div class="form-group">
+                            <label for="hardCupInput">封顶金额 (<span class="currency-unit">Currency</span>):</label>
+                            <input type="number" id="hardCupInput" step="any">
+                            <button class="admin-btn" id="setHardCupBtn">更新</button>
+                        </div>
+                        <div class="form-group">
+                            <label for="buyMaxSharePerUser">每用户最大购买份数:</label>
+                            <input type="number" id="buyMaxSharePerUser">
+                            <button class="admin-btn" id="setBuyMaxSharePerUserBtn">更新</button>
+                        </div>
+                    </div>
+
+                    <!-- 时间设置 -->
+                    <h3 class="admin-section-title">时间设置</h3>
+                    <div class="admin-panel">                        
+                        <div class="form-group">
+                        <label for="beginTime">开始时间</label>
+                        <input type="text" id="beginTime" class="form-control flatpickr-input" placeholder="选择开始时间">
+                        <button class="admin-btn" id="setBeginTimeBtn">更新开始时间</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="endTime">结束时间</label>
+                        <input type="text" id="endTime" class="form-control flatpickr-input" placeholder="选择结束时间">
+                            <button class="admin-btn" id="setEndTimeBtn">更新结束时间</button>
+                        </div>
+                    </div>
+
+                    <!-- 奖励设置 -->
+                    <h3 class="admin-section-title">推荐奖励设置</h3>
+                    <div class="admin-panel">
+                        <div class="form-group">
+                            <label>邀请奖励百分比:</label>
+                            <div class="reward-inputs">
+                                <input type="text" id="rewardList" placeholder="请输入逗号分隔的奖励百分比，如：10,5,3,2,1" style="width: 100%;">
+                            </div>
+                            <div class="reward-hint" style="margin-top: 5px; font-size: 12px; color: #999;">
+                                <p>说明：按层级顺序输入奖励比例，最高九代<br>使用逗号分隔 例如：输入 10,5,3,2 则表示<br>一代：10% 二代：5% 三代：3% 四代：2%</p>
+                            </div>
+                            <button class="admin-btn" id="setInvitorRewardBtn">更新</button>
+                        </div>
+                    </div>
+
+                    <!-- IDO控制 -->
+                    <h3 class="admin-section-title">IDO控制</h3>
+                    <div class="admin-panel">
+                        <div class="control-buttons-container">
+                            <div class="control-buttons">
+                                <button class="admin-btn danger" id="pauseBtn">暂停IDO</button>
+                                <button class="admin-btn success" id="unpauseBtn">恢复IDO</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group claim-group">
+                            <label>提取剩余代币: (数量输入0为提取全部余额)</label>
+                            <div class="claim-inputs">
+                                <input type="text" id="claimTokenAddress" placeholder="代币合约">
+                                <input type="text" id="claimToAddress" placeholder="接收地址">
+                                <input type="number" id="claimAmount" placeholder="数量">
+                            </div>
+                            <button class="admin-btn" id="claimTokenBtn">提取</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <div id="notificationContainer"></div>
+
+    <script src="./web3.min.js"></script>
+    <script src="./e.js"></script>
+    <script src="./upload.js"></script>
+    <script src="./abi.obf.js"></script>
+    <script src="./app.obf.js"></script>
+</body>
+
+</html>
